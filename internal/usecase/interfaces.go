@@ -4,8 +4,9 @@ package usecase
 import (
 	"context"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
 )
+
 
 type (
 	// UserRepo -.

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/logger"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/postgres"
 	"github.com/google/uuid"
 )
 
@@ -136,10 +136,10 @@ func (r *RoomsRepo) Update(ctx context.Context, req entity.Room) (entity.Room, e
 	if req.Status != "" && req.Status != "string" {
 		updateFields["status"] = req.Status
 	}
-	if req.Price != 0 {
+	if req.Price != 0{
 		updateFields["price"] = req.Price
 	}
-	if req.Availability {
+	if req.Availability{
 		updateFields["availability"] = req.Availability
 	}
 

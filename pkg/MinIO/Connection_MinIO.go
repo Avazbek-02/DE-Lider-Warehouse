@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"path/filepath"
 
-	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )

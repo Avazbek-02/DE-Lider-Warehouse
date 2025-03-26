@@ -5,11 +5,14 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/jwt"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/jwt"
 	"github.com/casbin/casbin"
 	"github.com/gin-gonic/gin"
 )
+
+
+
 
 func (h *Handler) AuthMiddleware(e *casbin.Enforcer) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -25,7 +28,7 @@ func (h *Handler) AuthMiddleware(e *casbin.Enforcer) gin.HandlerFunc {
 		}
 
 		if userRole == "" {
-
+			
 			token = strings.TrimPrefix(token, "Bearer ")
 
 			claims, err := jwt.ParseJWT(token, h.Config.JWT.Secret)

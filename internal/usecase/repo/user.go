@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/logger"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/postgres"
 	"github.com/google/uuid"
 )
 
@@ -128,28 +128,29 @@ func (r *UserRepo) GetList(ctx context.Context, req entity.GetListFilter) (entit
 	return response, nil
 }
 
+
 func (r *UserRepo) Update(ctx context.Context, req entity.User) (entity.User, error) {
 	updateFields := make(map[string]interface{})
 
-	if req.FullName != "" && req.FullName != "string" {
+	if req.FullName != "" && req.FullName != "string"{
 		updateFields["fullname"] = req.FullName
 	}
-	if req.UserName != "" && req.UserName != "string" {
+	if req.UserName != "" && req.UserName != "string"{
 		updateFields["username"] = req.UserName
 	}
-	if req.Email != "" && req.Email != "string" {
+	if req.Email != "" && req.Email != "string"{
 		updateFields["email"] = req.Email
 	}
-	if req.Phone != "" && req.Phone != "string" {
+	if req.Phone != "" && req.Phone != "string"{
 		updateFields["phone"] = req.Phone
 	}
-	if req.UserStatus != "" && req.UserStatus != "string" {
+	if req.UserStatus != "" && req.UserStatus != "string"{
 		updateFields["user_status"] = req.UserStatus
 	}
-	if req.Gender != "" && req.Gender != "string" {
+	if req.Gender != "" && req.Gender != "string"{
 		updateFields["gender"] = req.Gender
 	}
-	if req.UserRole != "" && req.UserRole != "string" {
+	if req.UserRole != "" && req.UserRole != "string"{
 		updateFields["role"] = req.UserRole
 	}
 

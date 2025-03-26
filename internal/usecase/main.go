@@ -1,10 +1,10 @@
 package usecase
 
 import (
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/usecase/repo"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/usecase/repo"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/logger"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/postgres"
 )
 
 // UseCase -.

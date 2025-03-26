@@ -84,10 +84,48 @@ run-app: swag-v1
 	docker-compose up -d --build
 
 create-mig:
-	migrate create -ext sql -dir migrations -seq hotel
+	migrate create -ext sql -dir migrations -seq warehouse
 
 mig-down:
 	migrate -database 'postgres://postgres:1234@localhost:5432/yalp?sslmode=disable' -path ./migrations down
 
 mig-force:
 	migrate -database 'postgres://postgres:1234@localhost:5432/yalp?sslmode=disable' -path ./migrations force 1
+
+.PHONY: run build clean test migrate swag
+
+# Build the application
+build:
+	go build -o bin/app cmd/main.go
+
+# Run the application
+run:
+	go run cmd/main.go
+
+# Clean build artifacts
+clean:
+	rm -rf bin/
+
+# Run tests
+test:
+	go test -v ./...
+
+# Generate Swagger documentation
+swag:
+	swag init -g cmd/main.go
+
+# Run database migrations
+migrate:
+	go run cmd/main.go migrate
+
+# Install dependencies
+deps:
+	go mod download
+
+# Format code
+fmt:
+	go fmt ./...
+
+# Run linter
+lint:
+	golangci-lint run

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/logger"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/postgres"
 	"github.com/google/uuid"
 )
 
@@ -82,7 +82,7 @@ func (r *RoomReviewRepo) GetSingle(ctx context.Context, req entity.Id) (entity.R
 // GetList - room review lar ro'yhatini qaytaradi
 func (r *RoomReviewRepo) GetList(ctx context.Context, req entity.GetListFilter) (entity.RoomReviewList, error) {
 	var (
-		response             = entity.RoomReviewList{}
+		response           = entity.RoomReviewList{}
 		createdAt, updatedAt time.Time
 	)
 

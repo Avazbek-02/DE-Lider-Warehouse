@@ -3,8 +3,8 @@ package handler
 import (
 	"strconv"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
 	"github.com/gin-gonic/gin"
 )
 

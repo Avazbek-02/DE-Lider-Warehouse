@@ -17,7 +17,7 @@ const (
 	_defaultTimeout  = time.Second
 )
 
-func init() {
+func RunMigrations() error {
 	var (
 		attempts = _defaultAttempts
 		err      error
@@ -26,7 +26,7 @@ func init() {
 
 	databaseURL, ok := os.LookupEnv("PG_URL")
 	if !ok || len(databaseURL) == 0 {
-		log.Fatalf("migrate: environment variable not declared: PG_URL")
+		return errors.New("environment variable not declared: PG_URL")
 	}
 
 	databaseURL += "?sslmode=disable"
@@ -43,19 +43,20 @@ func init() {
 	}
 
 	if err != nil {
-		log.Fatalf("Migrate: postgres connect error: %s", err)
+		return err
 	}
 
 	err = m.Up()
 	defer m.Close()
 	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		log.Fatalf("Migrate: up error: %s", err)
+		return err
 	}
 
 	if errors.Is(err, migrate.ErrNoChange) {
 		log.Printf("Migrate: no change")
-		return
+		return nil
 	}
 
 	log.Printf("Migrate: up success")
+	return nil
 }

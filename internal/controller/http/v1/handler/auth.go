@@ -5,13 +5,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/etc"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/hash"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/jwt"
+	"github.com/Avazbek-02/Online-Hotel-System/config"
+	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/etc"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/hash"
+	"github.com/Avazbek-02/Online-Hotel-System/pkg/jwt"
 	"github.com/gin-gonic/gin"
 )
+
 
 // Login godoc
 // @Router /auth/login [post]
@@ -35,7 +36,7 @@ func (h *Handler) Login(ctx *gin.Context) {
 	}
 
 	user, err := h.UseCase.UserRepo.GetSingle(ctx, entity.UserSingleRequest{
-		Email: body.Email,
+		Email:    body.Email,
 	})
 	if h.HandleDbError(ctx, err, "Error getting user") {
 		return
@@ -48,7 +49,7 @@ func (h *Handler) Login(ctx *gin.Context) {
 		h.ReturnError(ctx, config.ErrorForbidden, "Admin can only login to admin web", http.StatusBadRequest)
 		return
 	}
-
+	
 	if !hash.CheckPasswordHash(body.Password, user.Password_hash) {
 		h.ReturnError(ctx, config.ErrorInvalidPass, "Incorrect password", http.StatusBadRequest)
 		return
@@ -77,7 +78,7 @@ func (h *Handler) Login(ctx *gin.Context) {
 		"user_type":  user.UserType,
 		"platform":   body.Platform,
 		"session_id": session.ID,
-		"email":      user.Email,
+		"email": user.Email,
 	}
 
 	user.AccessToken, err = jwt.GenerateJWT(jwtFields, h.Config.JWT.Secret)
@@ -143,7 +144,7 @@ func (h *Handler) Register(ctx *gin.Context) {
 	}
 
 	user, err := h.UseCase.UserRepo.GetSingle(ctx, entity.UserSingleRequest{
-		Email: body.Email,
+		Email:    body.Email,
 	})
 	if err == nil {
 		h.ReturnError(ctx, config.ErrorConflict, "User already exists", 400)
@@ -157,14 +158,14 @@ func (h *Handler) Register(ctx *gin.Context) {
 	}
 
 	user, err = h.UseCase.UserRepo.Create(ctx, entity.User{
-		FullName:      body.FullName,
-		UserType:      "user",
-		UserRole:      "user",
-		UserName:      body.Username,
-		Email:         body.Email,
-		UserStatus:    "inverify",
+		FullName: body.FullName,
+		UserType: "user",
+		UserRole: "user",
+		UserName: body.Username,
+		Email:    body.Email,
+		UserStatus:   "inverify",
 		Password_hash: body.Password,
-		Gender:        body.Gender,
+		Gender:   body.Gender,
 	})
 	if h.HandleDbError(ctx, err, "Error creating user") {
 		return

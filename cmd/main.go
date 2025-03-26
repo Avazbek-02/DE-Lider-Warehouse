@@ -7,10 +7,18 @@ import (
 	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/app"
 )
 
-func main()  {
+func main() {
+	// Load configuration
 	cfg, err := config.NewConfig()
-	if err != nil{
-		log.Fatalf("Config error: %s",err)
+	if err != nil {
+		log.Fatalf("Config error: %s", err)
 	}
+
+	// Run database migrations
+	if err := app.RunMigrations(); err != nil {
+		log.Fatalf("Failed to run migrations: %s", err)
+	}
+
+	// Run app
 	app.Run(cfg)
 }
