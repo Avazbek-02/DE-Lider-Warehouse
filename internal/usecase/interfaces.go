@@ -4,9 +4,10 @@ package usecase
 import (
 	"context"
 
-	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
 )
 
+//go:generate mockgen -source=interfaces.go -destination=./mocks_test.go -package=usecase_test
 
 type (
 	// UserRepo -.
@@ -26,21 +27,5 @@ type (
 		Update(ctx context.Context, req entity.Session) (entity.Session, error)
 		Delete(ctx context.Context, req entity.Id) error
 		UpdateField(ctx context.Context, req entity.UpdateFieldRequest) (entity.RowsEffected, error)
-	}
-
-	RoomsRepoI interface {
-		Create(ctx context.Context, req entity.Room) (entity.Room, error)
-		GetSingle(ctx context.Context, req entity.Id) (entity.Room, error)
-		GetList(ctx context.Context, req entity.GetListFilter) (entity.RoomList, error)
-		Update(ctx context.Context, req entity.Room) (entity.Room, error)
-		Delete(ctx context.Context, req entity.Id) error
-	}
-
-	RoomReviewRepoI interface {
-		Create(ctx context.Context, req entity.RoomReview) (entity.RoomReview, error)
-		GetSingle(ctx context.Context, req entity.Id) (entity.RoomReview, error)
-		GetList(ctx context.Context, req entity.GetListFilter) (entity.RoomReviewList, error)
-		Update(ctx context.Context, req entity.RoomReview) (entity.RoomReview, error)
-		Delete(ctx context.Context, req entity.Id) error
 	}
 )

@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Avazbek-02/Online-Hotel-System/config"
-	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
-	"github.com/Avazbek-02/Online-Hotel-System/pkg/logger"
-	"github.com/Avazbek-02/Online-Hotel-System/pkg/postgres"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
+	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
 	"github.com/google/uuid"
-
 )
 
 type SessionRepo struct {

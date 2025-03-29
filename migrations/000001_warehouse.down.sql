@@ -1,3 +1,0 @@
-DROP TABLE IF EXISTS transactions;
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS admins;

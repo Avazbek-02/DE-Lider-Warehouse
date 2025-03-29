@@ -1,8 +1,8 @@
 package repo
 
 import (
+	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/entity"
 	"github.com/Masterminds/squirrel"
-	"github.com/Avazbek-02/Online-Hotel-System/internal/entity"
 )
 
 func PrepareFilter(filters []entity.Filter) squirrel.And {

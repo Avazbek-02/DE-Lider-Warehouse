@@ -10,8 +10,8 @@ import (
 
 	"github.com/Avazbek-02/DE-Lider-Warehouse/config"
 	v1 "github.com/Avazbek-02/DE-Lider-Warehouse/internal/controller/http/v1"
-	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/repository"
 	"github.com/Avazbek-02/DE-Lider-Warehouse/internal/usecase"
+	minio "github.com/Avazbek-02/DE-Lider-Warehouse/pkg/MinIO"
 	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/httpserver"
 	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/logger"
 	"github.com/Avazbek-02/DE-Lider-Warehouse/pkg/postgres"
@@ -21,14 +21,17 @@ import (
 func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
-	// Initialize database connection
-	db, err := postgres.New(cfg.PG.URL, postgres.MaxPoolSize(cfg.PG.PoolMax))
+	// Repository
+	pg, err := postgres.New(cfg.PG.URL, postgres.MaxPoolSize(cfg.PG.PoolMax))
 	if err != nil {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
-	defer db.Close()
+	defer pg.Close()
 
-	// Initialize Redis cache
+	// Use case
+	useCase := usecase.New(pg, cfg, l)
+
+	// redis
 	redis, err := rediscache.New(&rediscache.Config{
 		RedisHost: cfg.Redis.RedisHost,
 		RedisPort: cfg.Redis.RedisPort,
@@ -37,21 +40,20 @@ func Run(cfg *config.Config) {
 		l.Fatal(fmt.Errorf("app - Run - rediscache.New: %w", err))
 	}
 
-	// Initialize repositories
-	repos := repository.New(db.Pool)
-
-	// Initialize use cases
-	uc := usecase.New(cfg, repos)
-
-	// Initialize HTTP server and routes
+	// HTTP Server
 	handler := gin.New()
-	v1.NewRouter(handler, l, cfg, uc, redis)
+	//minio
+	minio, err := minio.MinIOConnect(cfg)
+	if err != nil {
+		l.Fatal(fmt.Errorf("app - Run - MinIo.New: %w", err))
+	}
+	v1.NewRouter(handler, l, cfg, useCase, redis, minio)
 
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
-	l.Info(fmt.Sprintf("Warehouse API server started on port: %s", cfg.HTTP.Port))
+	l.Info(fmt.Sprintf("app - Run - httpServer: %s", cfg.HTTP.Port))
 
-	// Waiting for interrupt signal
+	// Waiting signal
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
 
@@ -62,7 +64,7 @@ func Run(cfg *config.Config) {
 		l.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
 	}
 
-	// Graceful shutdown
+	// Shutdown
 	err = httpServer.Shutdown()
 	if err != nil {
 		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
